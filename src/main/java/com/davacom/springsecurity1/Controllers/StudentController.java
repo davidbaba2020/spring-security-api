@@ -19,11 +19,16 @@ public class StudentController {
             new Student(3,"Adam Smith")
     );
 
-    @GetMapping(path = "{studentId}")
+    @GetMapping("/all")
+    public List<Student> getStudents(){
+            return STUDENTS;
+    }
+
+    @GetMapping("/{studentId}")
     public Student getStudent(@PathVariable("studentId") Integer studentId){
         return STUDENTS.stream()
                 .filter(student -> studentId.equals(student.getStudentId()))
                 .findFirst()
-                .orElseThrow(()-> new IllegalStateException("Student of Id"+" "+studentId + " " + "does not exist" ));
+                .orElseThrow(() ->new IllegalStateException("Student with Id "+studentId+ " does not exist"));
     }
 }
